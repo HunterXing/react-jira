@@ -1,2 +1,3 @@
-# react-jira
-使用react创建的类jira项目
+# commit 规则
+
+https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional

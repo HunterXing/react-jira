@@ -1,0 +1,12 @@
+html {
+  /*
+    16px * 62.5% === 10
+    1rem = 10 px
+  */
+  font-size: 62.5%;
+}
+
+html body #root .App {
+  /* viewport height */
+  min-height: 100vh;
+}
