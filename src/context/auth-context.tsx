@@ -13,7 +13,7 @@ import { getToken } from "utils/authProvider";
 import { http } from "api/api";
 import { useMount } from "hooks/useMount";
 import { useAsync } from "hooks/useAsync";
-import { FullLoading } from "components/UI/FullLoading";
+import { FullLoading, FullPageError } from "components/UI/FullLoading";
 
 export interface AuthForm {
   username: string;
@@ -48,6 +48,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const {
     run,
     isLoading,
+    isIdle,
+    isError,
+    error,
     data: user,
     setData: setUser,
   } = useAsync<User | null>();
@@ -62,8 +65,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     authApi.register(form).then((user) => setUser(user));
   const logout = () => authApi.logout().then(() => setUser(null));
 
-  return isLoading ? (
+  return isLoading || isIdle ? (
     <FullLoading />
+  ) : isError ? (
+    <FullPageError error={error} />
   ) : (
     <AuthContext.Provider
       children={children}

@@ -17,7 +17,7 @@ const FullScreen = styled.div`
 
 export const FullLoading = () => (
   <FullScreen>
-    <Spin size={"large"}></Spin>
+    <Spin size={"large"} />
   </FullScreen>
 );
 

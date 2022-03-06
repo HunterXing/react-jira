@@ -11,9 +11,11 @@ import styled from "@emotion/styled";
 import logoSvg from "assets/images/logo.svg";
 import leftSvg from "assets/images/left.svg";
 import rightSvg from "assets/images/right.svg";
+import useDocumentTitle from "hooks/useDocumentTitle";
 
 export const UnAuthApp = () => {
   const [isLogin, setIsLogin] = useState(true);
+  useDocumentTitle("请登录以继续");
   return (
     <Container>
       <Header />

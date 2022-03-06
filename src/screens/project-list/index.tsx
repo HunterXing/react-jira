@@ -6,6 +6,7 @@ import { useDebounce } from "hooks/useDebounce";
 import { get } from "api/http";
 import { Typography } from "antd";
 import { useAsync } from "hooks/useAsync";
+import useDocumentTitle from "hooks/useDocumentTitle";
 interface Project {
   id: number;
   personId: number;
@@ -14,6 +15,7 @@ interface Project {
   created: number;
 }
 export const ProjectListScreen = () => {
+  useDocumentTitle("任务管理");
   const [param, setParam] = useState({
     name: "",
     personId: "",
