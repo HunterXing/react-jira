@@ -1,7 +1,7 @@
 /*
- * @description:
+ * @description: 处理http的状态和数据
  * @Date: 2021-08-07 13:52:34
- * @LastEditTime: 2021-08-09 20:14:26
+ * @LastEditTime: 2022-03-06 21:24:58
  */
 import { useState } from "react";
 interface State<D> {
@@ -18,7 +18,6 @@ const defaultInitialState: State<null> = {
 
 /**
  * @description: 处理信息和异常
- * @return {*}
  * @param initialState
  */
 export const useAsync = <D>(initialState?: State<D>) => {

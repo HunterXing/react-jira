@@ -5,5 +5,6 @@
  */
 
 import resolveParams from "./resolveParams"; // 处理get的参数
+const resetRouter = () => (window.location.href = window.location.origin);
 
-export { resolveParams };
+export { resolveParams, resetRouter };

@@ -9,13 +9,14 @@ import { useAuth } from "context/auth-context";
 import React from "react";
 import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
-
-// 静态资源
-import { ReactComponent as SoftwareLogo } from "assets/images/software-logo.svg";
 import { Row } from "components/UI/Row";
 import { Button, Dropdown, Menu } from "antd";
 import { ProjectScreen } from "screens/project-screen";
 import { ProjectListScreen } from "screens/project-list";
+import { resetRouter } from "utils/index";
+
+// 静态资源
+import { ReactComponent as SoftwareLogo } from "assets/images/software-logo.svg";
 
 export const AuthApp = () => {
   return (
@@ -24,14 +25,12 @@ export const AuthApp = () => {
       <Main>
         <Router>
           <Routes>
-            <Route path={"/"} element={<ProjectListScreen />}>
-              <Navigate to={"/projects"} />
-            </Route>
             <Route path={"/projects"} element={<ProjectListScreen />} />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
+            <Navigate to={`/projects`} />
           </Routes>
         </Router>
       </Main>
@@ -55,7 +54,9 @@ export const PageHeader = () => {
   return (
     <Header justifyContent={"space-between"}>
       <HeaderLeft gap={1.5}>
-        <SoftwareLogo width={"18rem"} />
+        <Button type={"link"} onClick={resetRouter}>
+          <SoftwareLogo width={"18rem"} />
+        </Button>
         <HeaderLeftItem>首页</HeaderLeftItem>
         <HeaderLeftItem>用户</HeaderLeftItem>
       </HeaderLeft>
