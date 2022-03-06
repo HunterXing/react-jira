@@ -62,12 +62,14 @@
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@types/qs": "^6.9.7",
+    "@welldone-software/why-did-you-render": "^6.2.3",
     "concurrently": "^6.2.0",
     "eslint-config-prettier": "^8.3.0",
     "husky": ">=6",
     "json-server": "^0.16.3",
     "lint-staged": ">=10",
-    "prettier": "2.3.2"
+    "prettier": "2.3.2",
+    "why-did-you-render": "^1.0.1"
   },
   "lint-staged": {
     "*.{js,css,md,ts,tsx}": "prettier --write"

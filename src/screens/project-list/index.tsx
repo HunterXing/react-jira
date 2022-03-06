@@ -7,6 +7,7 @@ import { get } from "api/http";
 import { Typography } from "antd";
 import { useAsync } from "hooks/useAsync";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import useQueryParam from "hooks/useQueryParam";
 interface Project {
   id: number;
   personId: number;
@@ -16,10 +17,9 @@ interface Project {
 }
 export const ProjectListScreen = () => {
   useDocumentTitle("任务管理", false);
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
+  const [param, setParam] = useQueryParam(["name", "personId"]);
+  // const [param] = useQueryParam(["name","personId"])
+
   const debounceParam = useDebounce(param, 500);
 
   const { run, isLoading, error, data: list } = useAsync<Project[]>();
@@ -51,10 +51,10 @@ export const ProjectListScreen = () => {
   const getUsers = async () => {
     await runUsers(get<User[]>("/users"));
   };
+
   /**
    * @description: 得到项目
-   * @param {*} param
-   * @return {*}
+   * @param param
    */
   const getProjects = async (param: any) => {
     await run(get<Project[]>("/projects", param));
@@ -71,3 +71,5 @@ export const ProjectListScreen = () => {
     </div>
   );
 };
+
+ProjectListScreen.whyDidYouRender = true;
