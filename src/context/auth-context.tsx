@@ -4,7 +4,7 @@
  * @Author: xingheng
  */
 
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { login as fetchLogin } from "api/auth-fetch";
 import * as authApi from "api/auth";
 import React from "react";
@@ -12,6 +12,8 @@ import { User } from "screens/project-list/List";
 import { getToken } from "utils/authProvider";
 import { http } from "api/api";
 import { useMount } from "hooks/useMount";
+import { useAsync } from "hooks/useAsync";
+import { FullLoading } from "components/UI/FullLoading";
 
 export interface AuthForm {
   username: string;
@@ -42,10 +44,16 @@ const AuthContext = React.createContext<
 AuthContext.displayName = "AuthContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-
+  // const [user, setUser] = useState<User | null>(null);
+  const {
+    run,
+    isLoading,
+    data: user,
+    setData: setUser,
+  } = useAsync<User | null>();
   useMount(() => {
-    bootstrapUser().then(setUser);
+    // bootstrapUser().then(setUser);
+    void run(bootstrapUser());
   });
 
   // point free
@@ -54,7 +62,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     authApi.register(form).then((user) => setUser(user));
   const logout = () => authApi.logout().then(() => setUser(null));
 
-  return (
+  return isLoading ? (
+    <FullLoading />
+  ) : (
     <AuthContext.Provider
       children={children}
       value={{ user, login, register, logout }}
