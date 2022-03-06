@@ -21,16 +21,17 @@ export const AuthApp = () => {
   return (
     <Container>
       <PageHeader />
-      {/* <Nav>nav</Nav> */}
       <Main>
-        {/* <ProjectListScreen /> */}
         <Router>
           <Routes>
             <Route path={"/"} element={<ProjectListScreen />}>
               <Navigate to={"/projects"} />
             </Route>
             <Route path={"/projects"} element={<ProjectListScreen />} />
-            <Route path={"/project/:projectId/*"} element={<ProjectScreen />} />
+            <Route
+              path={"/projects/:projectId/*"}
+              element={<ProjectScreen />}
+            />
           </Routes>
         </Router>
       </Main>
