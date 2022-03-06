@@ -7,14 +7,6 @@ interface ListProps extends TableProps<any> {
   users: User[];
 }
 
-// interface Project {
-//   id: number;
-//   personId: number;
-//   name: string;
-//   organization: string;
-//   created: number;
-// }
-
 export interface User {
   name: string;
   id: number;
@@ -59,5 +51,12 @@ export const List = ({ users, ...props }: ListProps) => {
       },
     },
   ];
-  return <Table {...props} columns={columns} rowKey="id" />;
+  return (
+    <Table
+      {...props}
+      columns={columns}
+      rowKey="id"
+      style={{ marginTop: "10px" }}
+    />
+  );
 };

@@ -1,13 +1,15 @@
 /*
- * @description: 登录和注册相关
+ * @description: 登录和注册相关 使用featch
  * @Date: 2021-07-25 22:59:31
- * @LastEditTime: 2021-08-01 11:11:37
+ * @LastEditTime: 2022-03-05 20:58:59
  */
 import { message } from "antd";
 import { AuthForm } from "context/auth-context";
 import { User } from "screens/project-list/List";
 import { handleUserResponse, localStorageKey } from "utils/authProvider";
 import { post } from "./http";
+import { http } from "api/api";
+import to from "utils/toAsync";
 export interface Response {
   msg: string;
   code: number;
@@ -16,26 +18,30 @@ export interface Response {
 
 /**
  * @description: 登录
- * @param {string} username
- * @param {string} password
- * @return {*}
+ * @param authForm
  */
-export const login = async (authForm: AuthForm): Promise<User> => {
-  const response = await post(`/login`, authForm);
-  if (response.data.user) {
-    handleUserResponse(response.data.user as User); // 成功之后设置token
+export const login = async (authForm: AuthForm) => {
+  const [error, response] = await to(
+    http("login", {
+      method: "post",
+      data: {
+        ...authForm,
+      },
+    })
+  );
+  if (error) {
+    message.error(error.message);
+    return Promise.reject(response);
+  } else if (response.user) {
+    handleUserResponse(response.user); // 成功之后设置token
     message.success("登录成功");
-    return Promise.resolve(response.data.user as User);
-  } else {
-    return Promise.reject(authForm);
+    return Promise.resolve(response.user);
   }
 };
 
 /**
  * @description: 注册
- * @param {string} username
- * @param {string} password
- * @return {*}
+ * @param authForm
  */
 export const register = async (authForm: AuthForm): Promise<User> => {
   const response = await post(`/register`, authForm);
@@ -49,7 +55,6 @@ export const register = async (authForm: AuthForm): Promise<User> => {
 
 /**
  * @description: 登出
- * @param {*}
  * @return {*}
  */
 export const logout = async () =>

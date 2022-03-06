@@ -5,7 +5,7 @@
  */
 
 import styled from "@emotion/styled";
-import { useAuth } from "context/authContext";
+import { useAuth } from "context/auth-context";
 import React from "react";
 import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";

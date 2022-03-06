@@ -5,14 +5,17 @@
  */
 
 import React, { Fragment } from "react";
-import { AuthForm, useAuth } from "context/authContext";
+import { AuthForm, useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { LongButton } from "unauth-app";
+import { useAsync } from "hooks/useAsync";
 export const LoginScreen = () => {
   const { login, user } = useAuth();
-  const handleSubmit = (form: AuthForm) => {
-    login(form);
+  const { run, isLoading } = useAsync();
+
+  const handleSubmit = async (form: AuthForm) => {
+    await run(login(form));
   };
   return (
     <Fragment>
@@ -31,7 +34,7 @@ export const LoginScreen = () => {
           <Input placeholder={"密码"} type="password" id={"password"} />
         </FormItem>
         <FormItem>
-          <LongButton htmlType={"submit"} type={"primary"}>
+          <LongButton htmlType={"submit"} type={"primary"} loading={isLoading}>
             登录
           </LongButton>
         </FormItem>

@@ -23,13 +23,14 @@ export const ProjectListScreen = () => {
   const { run, isLoading, error, data: list } = useAsync<Project[]>();
 
   const { run: runUsers, data: users } = useAsync<User[]>();
+
   /**
    * @description: 自定义hook 相当于 componentDidMount() 仅在页面加载后第一次加载
    * @param {*}
    * @return {*}
    */
-  useMount(() => {
-    getUsers();
+  useMount(async () => {
+    await getUsers();
   });
 
   /**
@@ -38,17 +39,15 @@ export const ProjectListScreen = () => {
    * @return {*}
    */
   useEffect(() => {
-    getProjects(debounceParam);
+    void getProjects(debounceParam);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceParam]);
 
   /**
    * @description: 得到用户
-   * @param {*}
-   * @return {*}
    */
   const getUsers = async () => {
-    runUsers(get<User[]>("/users"));
+    await runUsers(get<User[]>("/users"));
   };
   /**
    * @description: 得到项目
@@ -56,11 +55,12 @@ export const ProjectListScreen = () => {
    * @return {*}
    */
   const getProjects = async (param: any) => {
-    run(get<Project[]>("/projects", param));
+    await run(get<Project[]>("/projects", param));
   };
 
   return (
     <div>
+      <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>

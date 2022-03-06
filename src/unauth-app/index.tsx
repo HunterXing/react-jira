@@ -12,7 +12,7 @@ import logoSvg from "assets/images/logo.svg";
 import leftSvg from "assets/images/left.svg";
 import rightSvg from "assets/images/right.svg";
 
-export const UnauthApp = () => {
+export const UnAuthApp = () => {
   const [isLogin, setIsLogin] = useState(true);
   return (
     <Container>

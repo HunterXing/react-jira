@@ -1,7 +1,10 @@
 import { Input, Select } from "antd";
 import React, { Fragment } from "react";
 import { User } from "./List";
+import { css } from "@emotion/react";
+
 const { Option } = Select;
+
 interface SearchPanelProps {
   users: User[];
   param: {
@@ -16,7 +19,8 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
     <Fragment>
       <Input
         value={param.name}
-        style={{ width: "calc(100% - 120px)" }}
+        placeholder="项目名"
+        style={{ width: "200px", marginRight: "20px" }}
         onChange={(e) => {
           setParam({
             ...param,

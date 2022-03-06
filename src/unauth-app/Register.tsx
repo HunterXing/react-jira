@@ -5,7 +5,7 @@
  */
 
 import React, { Fragment } from "react";
-import { AuthForm, useAuth } from "context/authContext";
+import { AuthForm, useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { LongButton } from "unauth-app";
