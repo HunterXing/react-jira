@@ -15,7 +15,7 @@ import useDocumentTitle from "hooks/useDocumentTitle";
 
 export const UnAuthApp = () => {
   const [isLogin, setIsLogin] = useState(true);
-  useDocumentTitle("请登录以继续");
+  // useDocumentTitle("请登录以继续");
   return (
     <Container>
       <Header />

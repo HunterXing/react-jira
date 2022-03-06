@@ -15,7 +15,7 @@ interface Project {
   created: number;
 }
 export const ProjectListScreen = () => {
-  useDocumentTitle("任务管理");
+  useDocumentTitle("任务管理", false);
   const [param, setParam] = useState({
     name: "",
     personId: "",
