@@ -4,6 +4,8 @@
  * @LastEditTime: 2022-03-06 21:24:58
  */
 import { useState } from "react";
+import useMountedRef from "hooks/useMountedRef";
+
 interface State<D> {
   error: Error | null;
   data: D | null;
@@ -21,6 +23,7 @@ const defaultInitialState: State<null> = {
  * @param initialState
  */
 export const useAsync = <D>(initialState?: State<D>) => {
+  const mounted = useMountedRef();
   const [state, setState] = useState<State<D>>({
     ...defaultInitialState,
     ...initialState,
@@ -51,6 +54,8 @@ export const useAsync = <D>(initialState?: State<D>) => {
 
     return promise
       .then((data) => {
+        if (mounted) setData(data);
+
         setData(data);
         return data;
       })

@@ -2,9 +2,13 @@ import React from "react";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import Star from "components/UI/Star";
+import { useEditProject } from "api/project";
+import { Project } from "screens/project-list/index";
 interface ListProps extends TableProps<any> {
   // list: Project[];
   users: User[];
+  setList: (projects: Project[]) => void;
 }
 
 export interface User {
@@ -16,7 +20,24 @@ export interface User {
 // type PropsType = Omit<ListProps, 'users'>
 
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+  // 函数柯里化
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   const columns = [
+    {
+      title: <Star isStar={true} disabled={true} />,
+      render: (name: string, project: any) => {
+        return (
+          <Star
+            isStar={project.pin}
+            onCheckedChange={() => {
+              pinProject(project);
+            }}
+          />
+        );
+      },
+      width: 50,
+    },
     {
       title: "名称",
       dataIndex: "name",

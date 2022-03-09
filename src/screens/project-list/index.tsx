@@ -8,12 +8,13 @@ import { Typography } from "antd";
 import { useAsync } from "hooks/useAsync";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import useQueryParam from "hooks/useQueryParam";
-interface Project {
+export interface Project {
   id: number;
   personId: number;
   name: string;
   organization: string;
   created: number;
+  pin?: boolean;
 }
 export const ProjectListScreen = () => {
   useDocumentTitle("任务管理", false);
@@ -22,7 +23,13 @@ export const ProjectListScreen = () => {
 
   const debounceParam = useDebounce(param, 500);
 
-  const { run, isLoading, error, data: list } = useAsync<Project[]>();
+  const {
+    run,
+    isLoading,
+    error,
+    data: list,
+    setData: setList,
+  } = useAsync<Project[]>();
 
   const { run: runUsers, data: users } = useAsync<User[]>();
 
@@ -67,7 +74,12 @@ export const ProjectListScreen = () => {
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
-      <List loading={isLoading} dataSource={list || []} users={users || []} />
+      <List
+        loading={isLoading}
+        dataSource={list || []}
+        users={users || []}
+        setList={setList}
+      />
     </div>
   );
 };
