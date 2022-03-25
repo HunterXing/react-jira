@@ -1,7 +1,7 @@
 /*
  * @description: 处理http的状态和数据
  * @Date: 2021-08-07 13:52:34
- * @LastEditTime: 2022-03-06 21:24:58
+ * @LastEditTime: 2022-03-25 11:34:46
  */
 import { useState } from "react";
 import useMountedRef from "hooks/useMountedRef";
@@ -54,9 +54,8 @@ export const useAsync = <D>(initialState?: State<D>) => {
 
     return promise
       .then((data) => {
-        if (mounted) setData(data);
-
-        setData(data);
+        if (mounted.current)
+          setData(data);
         return data;
       })
       .catch((error) => {

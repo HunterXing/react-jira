@@ -11,6 +11,7 @@ const useMountedRef = () => {
 
   React.useEffect(() => {
     mountedRef.current = true;
+    // 页面被卸载的时候
     return () => {
       mountedRef.current = false;
     };
