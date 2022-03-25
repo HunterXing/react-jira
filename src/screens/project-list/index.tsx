@@ -1,6 +1,6 @@
 import { SearchPanel } from "./SearchPanel";
 import { List, User } from "./List";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useMount } from "hooks/useMount";
 import { useDebounce } from "hooks/useDebounce";
 import { get } from "api/http";
@@ -18,7 +18,8 @@ export interface Project {
 }
 export const ProjectListScreen = () => {
   useDocumentTitle("任务管理", false);
-  const [param, setParam] = useQueryParam(["name", "personId"]);
+  const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);
+  const [param, setParam] = useQueryParam(keys);
   // const [param] = useQueryParam(["name","personId"])
 
   const debounceParam = useDebounce(param, 500);
