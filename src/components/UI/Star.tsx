@@ -3,7 +3,7 @@
  * @Date: 2022-03-07 22:16:23
  * @Author: xingheng
  */
-import React, { useState } from "react";
+import React from "react";
 import { Rate } from "antd";
 
 interface StarProps extends React.ComponentProps<typeof Rate> {

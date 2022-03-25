@@ -20,6 +20,7 @@ const useQueryParam = <K extends string>(keys: K[]) => {
           };
           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, {} as { [key in K]: string }),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       [searchParam]
     ),
     setSearchParam,

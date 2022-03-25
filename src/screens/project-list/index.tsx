@@ -1,6 +1,6 @@
 import { SearchPanel } from "./SearchPanel";
 import { List, User } from "./List";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useMount } from "hooks/useMount";
 import { useDebounce } from "hooks/useDebounce";
 import { get } from "api/http";
