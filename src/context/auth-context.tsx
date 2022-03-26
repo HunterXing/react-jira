@@ -4,7 +4,7 @@
  * @Author: xingheng
  */
 
-import { ReactNode } from "react";
+import { ReactNode, useCallback } from "react";
 import { login as fetchLogin } from "api/auth-fetch";
 import * as authApi from "api/auth";
 import React from "react";
@@ -54,10 +54,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     data: user,
     setData: setUser,
   } = useAsync<User | null>();
-  useMount(() => {
+
+  const init = useCallback(() => {
     // bootstrapUser().then(setUser);
     void run(bootstrapUser());
-  });
+  }, [run]);
+
+  useMount(init);
 
   // point free
   const login = (form: AuthForm) => fetchLogin(form).then(setUser);

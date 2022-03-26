@@ -1,9 +1,9 @@
 /*
  * @description: 处理http的状态和数据
  * @Date: 2021-08-07 13:52:34
- * @LastEditTime: 2022-03-25 11:34:46
+ * @LastEditTime: 2022-03-25 15:55:23
  */
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useMountedRef from "hooks/useMountedRef";
 
 interface State<D> {
@@ -29,40 +29,48 @@ export const useAsync = <D>(initialState?: State<D>) => {
     ...initialState,
   });
 
-  const setData = (data: D) =>
-    setState({
-      data,
-      stat: "success",
-      error: null,
-    });
+  const setData = useCallback(
+    (data: D) =>
+      setState({
+        data,
+        stat: "success",
+        error: null,
+      }),
+    []
+  );
 
-  const setError = (error: Error) =>
-    setState({
-      error,
-      stat: "error",
-      data: null,
-    });
+  const setError = useCallback(
+    (error: Error) =>
+      setState({
+        error,
+        stat: "error",
+        data: null,
+      }),
+    []
+  );
 
-  const run = (promise: Promise<D>) => {
-    if (!promise || !promise.then) {
-      throw new Error("请传入promise类型数据");
-    }
-    setState({
-      ...state,
-      stat: "loading",
-    });
+  const run = useCallback(
+    (promise: Promise<D>) => {
+      if (!promise || !promise.then) {
+        throw new Error("请传入promise类型数据");
+      }
+      setState((preState) => ({
+        ...preState,
+        stat: "loading",
+      }));
 
-    return promise
-      .then((data) => {
-        if (mounted.current)
-          setData(data);
-        return data;
-      })
-      .catch((error) => {
-        setError(error);
-        return error;
-      });
-  };
+      return promise
+        .then((data) => {
+          if (mounted.current) setData(data);
+          return data;
+        })
+        .catch((error) => {
+          setError(error);
+          return error;
+        });
+    },
+    [mounted, setData, setError]
+  );
 
   return {
     isIdle: state.stat === "idle",

@@ -1,6 +1,6 @@
 import { SearchPanel } from "./SearchPanel";
 import { List, User } from "./List";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useMount } from "hooks/useMount";
 import { useDebounce } from "hooks/useDebounce";
 import { get } from "api/http";
@@ -16,7 +16,14 @@ export interface Project {
   created: number;
   pin?: boolean;
 }
-export const ProjectListScreen = () => {
+export const ProjectListScreen = ({
+  modelVisibility,
+  setModelVisibility,
+  ...props
+}: {
+  modelVisibility: boolean;
+  setModelVisibility: (visible: boolean) => void;
+}) => {
   useDocumentTitle("任务管理", false);
   const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);
   const [param, setParam] = useQueryParam(keys);
@@ -35,15 +42,6 @@ export const ProjectListScreen = () => {
   const { run: runUsers, data: users } = useAsync<User[]>();
 
   /**
-   * @description: 自定义hook 相当于 componentDidMount() 仅在页面加载后第一次加载
-   * @param {*}
-   * @return {*}
-   */
-  useMount(async () => {
-    await getUsers();
-  });
-
-  /**
    * @description: 输入或者选中的参数改变时，调用函数
    * @param {*}
    * @return {*}
@@ -54,19 +52,23 @@ export const ProjectListScreen = () => {
   }, [debounceParam]);
 
   /**
-   * @description: 得到用户
-   */
-  const getUsers = async () => {
-    await runUsers(get<User[]>("/users"));
-  };
-
-  /**
    * @description: 得到项目
    * @param param
    */
   const getProjects = async (param: any) => {
     await run(get<Project[]>("/projects", param));
   };
+
+  /**
+   * @description: 自定义hook 相当于 componentDidMount() 仅在页面加载后第一次加载
+   * @param {*}
+   * @return {*}
+   */
+  useMount(
+    useCallback(() => {
+      runUsers(get<User[]>("/users"));
+    }, [runUsers])
+  );
 
   return (
     <div>
@@ -80,6 +82,8 @@ export const ProjectListScreen = () => {
         dataSource={list || []}
         users={users || []}
         setList={setList}
+        setModelVisibility={setModelVisibility}
+        modelVisibility={modelVisibility}
       />
     </div>
   );

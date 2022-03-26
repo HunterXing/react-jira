@@ -1,14 +1,15 @@
 import React from "react";
-import { Table, TableProps } from "antd";
+import { Button, Dropdown, Menu, Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import Star from "components/UI/Star";
 import { useEditProject } from "api/project";
 import { Project } from "screens/project-list/index";
 interface ListProps extends TableProps<any> {
-  // list: Project[];
   users: User[];
   setList: (projects: Project[]) => void;
+  modelVisibility: boolean;
+  setModelVisibility: (visible: boolean) => void;
 }
 
 export interface User {
@@ -19,7 +20,12 @@ export interface User {
 
 // type PropsType = Omit<ListProps, 'users'>
 
-export const List = ({ users, ...props }: ListProps) => {
+export const List = ({
+  users,
+  modelVisibility,
+  setModelVisibility,
+  ...props
+}: ListProps) => {
   const { mutate } = useEditProject();
   // 函数柯里化
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
@@ -69,6 +75,28 @@ export const List = ({ users, ...props }: ListProps) => {
       key: "created",
       render: (created: number) => {
         return <span>{dayjs(created).format("YYYY-MM-DD")}</span>;
+      },
+    },
+    {
+      title: "操作",
+      render: (value: number, project: any) => {
+        return (
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item onClick={() => setModelVisibility(true)}>
+                  修改项目
+                </Menu.Item>
+              </Menu>
+            }
+            placement="bottomLeft"
+            arrow
+          >
+            <Button type="link" style={{ padding: 0 }}>
+              ...
+            </Button>
+          </Dropdown>
+        );
       },
     },
   ];
