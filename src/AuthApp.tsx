@@ -1,12 +1,12 @@
 /*
  * @description: 登录之后的app
  * @Date: 2021-08-01 01:37:59
- * @LastEditTime: 2022-03-26 20:34:27
+ * @LastEditTime: 2022-03-26 23:06:00
  */
 
 import styled from "@emotion/styled";
 import { useAuth } from "context/auth-context";
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Row } from "components/UI/Row";
@@ -20,23 +20,35 @@ import { ReactComponent as SoftwareLogo } from "assets/images/software-logo.svg"
 import { ProjectModel } from "screens/project-list/ProjectModel";
 
 export const AuthApp = () => {
-  const [modelVisibility, setModelVisibility] = React.useState(false);
+  const [modelVisibility, setModelVisibility] = useState(false);
+  const [modelTitle, setModelTitle] = useState("");
   return (
     <Container>
       <PageHeader
-        modelVisibility={modelVisibility}
-        setModelVisibility={setModelVisibility}
+        ProjectButton={
+          <Button type="text" onClick={() => setModelVisibility(true)}>
+            新增
+          </Button>
+        }
       />
       <Main>
-        <Button onClick={() => setModelVisibility(true)}>新增</Button>
         <Router>
           <Routes>
             <Route
               path={"/projects"}
               element={
                 <ProjectListScreen
-                  modelVisibility={modelVisibility}
-                  setModelVisibility={setModelVisibility}
+                  ProjectButton={
+                    <Button
+                      type="text"
+                      onClick={() => {
+                        setModelVisibility(true);
+                        setModelTitle("编辑项目");
+                      }}
+                    >
+                      编辑项目
+                    </Button>
+                  }
                 />
               }
             />
@@ -51,6 +63,7 @@ export const AuthApp = () => {
       <ProjectModel
         visible={modelVisibility}
         onClose={() => setModelVisibility(false)}
+        title={modelTitle}
       />
       {/* <Aside>aside</Aside> */}
       <Footer>版权所有@xing 2021</Footer>
@@ -58,10 +71,7 @@ export const AuthApp = () => {
   );
 };
 
-export const PageHeader = (props: {
-  modelVisibility: boolean;
-  setModelVisibility: (visibility: boolean) => void;
-}) => {
+export const PageHeader = (props: { ProjectButton: JSX.Element }) => {
   const { logout, user } = useAuth();
   const menu = (
     <Menu>
@@ -74,19 +84,9 @@ export const PageHeader = (props: {
   );
 
   const ProjectPopover = () => (
-    <Popover placement="bottom" content={ProjectPopoverContent} trigger="click">
+    <Popover placement="bottom" content={props.ProjectButton} trigger="click">
       <HeaderLeftItem>项目</HeaderLeftItem>
     </Popover>
-  );
-
-  const ProjectPopoverContent = () => (
-    <Button
-      type="text"
-      style={{ padding: 0 }}
-      onClick={() => props.setModelVisibility(true)}
-    >
-      创建项目
-    </Button>
   );
 
   return (

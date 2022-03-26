@@ -8,6 +8,7 @@ import { Typography } from "antd";
 import { useAsync } from "hooks/useAsync";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import useQueryParam from "hooks/useQueryParam";
+import styled from "@emotion/styled";
 export interface Project {
   id: number;
   personId: number;
@@ -17,12 +18,9 @@ export interface Project {
   pin?: boolean;
 }
 export const ProjectListScreen = ({
-  modelVisibility,
-  setModelVisibility,
-  ...props
+  ProjectButton,
 }: {
-  modelVisibility: boolean;
-  setModelVisibility: (visible: boolean) => void;
+  ProjectButton: JSX.Element;
 }) => {
   useDocumentTitle("任务管理", false);
   const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);
@@ -72,7 +70,9 @@ export const ProjectListScreen = ({
 
   return (
     <div>
-      <h1>项目列表</h1>
+      <TopNav>
+        <h1>项目列表</h1>
+      </TopNav>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
@@ -82,11 +82,13 @@ export const ProjectListScreen = ({
         dataSource={list || []}
         users={users || []}
         setList={setList}
-        setModelVisibility={setModelVisibility}
-        modelVisibility={modelVisibility}
+        ProjectButton={ProjectButton}
       />
     </div>
   );
 };
-
+const TopNav = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 ProjectListScreen.whyDidYouRender = true;

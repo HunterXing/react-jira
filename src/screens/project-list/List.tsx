@@ -8,8 +8,7 @@ import { Project } from "screens/project-list/index";
 interface ListProps extends TableProps<any> {
   users: User[];
   setList: (projects: Project[]) => void;
-  modelVisibility: boolean;
-  setModelVisibility: (visible: boolean) => void;
+  ProjectButton: JSX.Element;
 }
 
 export interface User {
@@ -20,12 +19,7 @@ export interface User {
 
 // type PropsType = Omit<ListProps, 'users'>
 
-export const List = ({
-  users,
-  modelVisibility,
-  setModelVisibility,
-  ...props
-}: ListProps) => {
+export const List = ({ users, ProjectButton, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   // 函数柯里化
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
@@ -84,9 +78,7 @@ export const List = ({
           <Dropdown
             overlay={
               <Menu>
-                <Menu.Item onClick={() => setModelVisibility(true)}>
-                  修改项目
-                </Menu.Item>
+                <Menu.Item>{ProjectButton}</Menu.Item>
               </Menu>
             }
             placement="bottomLeft"
