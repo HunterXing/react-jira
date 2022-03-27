@@ -5,15 +5,25 @@
  */
 import { Drawer, DrawerProps } from "antd";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  projectListActions,
+  selectProjectModel,
+  selectProjectModelVisible,
+} from "./ProjectList.slice";
 
 export interface ModelProps extends DrawerProps {}
 
-export const ProjectModel = (props: ModelProps) => {
+export const ProjectModel = () => {
+  const dispatch = useDispatch();
+  const modelVisible = useSelector(selectProjectModelVisible);
+  const modelParams = useSelector(selectProjectModel);
+
   return (
     <Drawer
-      title={props.title || "新增项目"}
-      onClose={props.onClose}
-      visible={props.visible}
+      title={modelParams.title}
+      onClose={() => dispatch(projectListActions.closeProjectModel())}
+      visible={modelVisible}
       width={"100%"}
     >
       这是一个新增/编辑项目的弹窗

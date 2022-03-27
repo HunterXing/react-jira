@@ -1,6 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { projectListSlice } from "screens/project-list/ProjectList.slice";
 
-export const rootReducer = {};
+export const rootReducer = {
+  projectList: projectListSlice.reducer,
+};
 
 export const store = configureStore({
   reducer: rootReducer,

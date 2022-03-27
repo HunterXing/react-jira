@@ -17,11 +17,7 @@ export interface Project {
   created: number;
   pin?: boolean;
 }
-export const ProjectListScreen = ({
-  ProjectButton,
-}: {
-  ProjectButton: JSX.Element;
-}) => {
+export const ProjectListScreen = () => {
   useDocumentTitle("任务管理", false);
   const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);
   const [param, setParam] = useQueryParam(keys);
@@ -82,7 +78,6 @@ export const ProjectListScreen = ({
         dataSource={list || []}
         users={users || []}
         setList={setList}
-        ProjectButton={ProjectButton}
       />
     </div>
   );
