@@ -1,7 +1,7 @@
 /*
  * @description: 登录
  * @Date: 2021-08-01 01:23:31
- * @LastEditTime: 2021-08-02 23:19:06
+ * @LastEditTime: 2022-03-27 23:25:26
  */
 
 import React, { Fragment } from "react";
@@ -9,8 +9,10 @@ import { AuthForm, useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { LongButton } from "unauth-app";
+// import { useAsync } from "hooks/useAsync";
 import { useAsync } from "hooks/useAsync";
 export const LoginScreen = () => {
+  // const user = useSelector(selectUser)
   const { login, user } = useAuth();
   const { run, isLoading } = useAsync();
 

@@ -5,8 +5,6 @@
  */
 
 import { ReactNode, useCallback } from "react";
-import { login as fetchLogin } from "api/auth-fetch";
-import * as authApi from "api/auth";
 import React from "react";
 import { User } from "screens/project-list/List";
 import { getToken } from "utils/authProvider";
@@ -14,13 +12,21 @@ import { http } from "api/api";
 import { useMount } from "hooks/useMount";
 import { useAsync } from "hooks/useAsync";
 import { FullLoading, FullPageError } from "components/UI/FullLoading";
+import {
+  selectUser,
+  storeLogin,
+  storeRegister,
+  storeLogout,
+  storeBootstrapUser,
+} from "store/auth.slice";
+import { useDispatch, useSelector } from "react-redux";
 
 export interface AuthForm {
   username: string;
   password: string;
 }
 
-const bootstrapUser = async () => {
+export const bootstrapUser = async () => {
   let user = null;
   const token = getToken();
   if (token) {
@@ -30,60 +36,37 @@ const bootstrapUser = async () => {
   return user;
 };
 
-const AuthContext = React.createContext<
-  | {
-      user: User | null;
-      register: (form: AuthForm) => Promise<void>;
-      login: (form: AuthForm) => Promise<void>;
-      logout: () => void;
-    }
-  | undefined
->(undefined);
-
-// 主要用于devtool 对项目本身没作用
-AuthContext.displayName = "AuthContext";
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // const [user, setUser] = useState<User | null>(null);
-  const {
-    run,
-    isLoading,
-    isIdle,
-    isError,
-    error,
-    data: user,
-    setData: setUser,
-  } = useAsync<User | null>();
+  const { run, isLoading, isIdle, isError, error } = useAsync<User | null>();
 
+  const dispatch: (...args: unknown[]) => Promise<User> = useDispatch();
   const init = useCallback(() => {
-    // bootstrapUser().then(setUser);
-    void run(bootstrapUser());
-  }, [run]);
+    void run(dispatch(storeBootstrapUser()));
+  }, [dispatch, run]);
 
   useMount(init);
-
-  // point free
-  const login = (form: AuthForm) => fetchLogin(form).then(setUser);
-  const register = (form: AuthForm) =>
-    authApi.register(form).then((user) => setUser(user));
-  const logout = () => authApi.logout().then(() => setUser(null));
 
   return isLoading || isIdle ? (
     <FullLoading />
   ) : isError ? (
     <FullPageError error={error} />
   ) : (
-    <AuthContext.Provider
-      children={children}
-      value={{ user, login, register, logout }}
-    />
+    <div>{children}</div>
   );
 };
 
 export const useAuth = () => {
-  const context = React.useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth only be used in AuthProvider");
-  }
-  return context;
+  const dispatch: (...args: unknown[]) => Promise<User> = useDispatch();
+  const login = useCallback(
+    (form: AuthForm) => dispatch(storeLogin(form)),
+    [dispatch]
+  );
+  const register = useCallback(
+    (form: AuthForm) => dispatch(storeRegister(form)),
+    [dispatch]
+  );
+  const logout = useCallback(() => dispatch(storeLogout()), [dispatch]);
+  const user = useSelector(selectUser);
+  return { user, login, register, logout };
 };
