@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import Star from "components/UI/Star";
 import { useEditProject } from "api/project";
 import { Project } from "screens/project-list/index";
+import useProjectModel from "hooks/useProjectModel";
 interface ListProps extends TableProps<any> {
   users: User[];
   setList: (projects: Project[]) => void;
-  ProjectButton: JSX.Element;
 }
 
 export interface User {
@@ -19,10 +19,16 @@ export interface User {
 
 // type PropsType = Omit<ListProps, 'users'>
 
-export const List = ({ users, ProjectButton, ...props }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+  const { open, setIsEdit } = useProjectModel();
   // 函数柯里化
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+
+  const handleOpenEditModel = () => {
+    open();
+    setIsEdit();
+  };
   const columns = [
     {
       title: <Star isStar={true} disabled={true} />,
@@ -78,7 +84,15 @@ export const List = ({ users, ProjectButton, ...props }: ListProps) => {
           <Dropdown
             overlay={
               <Menu>
-                <Menu.Item>{ProjectButton}</Menu.Item>
+                <Menu.Item key={1}>
+                  <Button
+                    type="text"
+                    style={{ padding: 0 }}
+                    onClick={() => handleOpenEditModel()}
+                  >
+                    编辑项目
+                  </Button>
+                </Menu.Item>
               </Menu>
             }
             placement="bottomLeft"

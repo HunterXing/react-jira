@@ -4,16 +4,18 @@
  * @Author: xingheng
  */
 import { Drawer, DrawerProps } from "antd";
+import useProjectModel from "hooks/useProjectModel";
 import React from "react";
 
 export interface ModelProps extends DrawerProps {}
 
-export const ProjectModel = (props: ModelProps) => {
+export const ProjectModel = () => {
+  const { projectModelOpen, close, projectModelIsEdit } = useProjectModel();
   return (
     <Drawer
-      title={props.title || "新增项目"}
-      onClose={props.onClose}
-      visible={props.visible}
+      title={!projectModelIsEdit ? "新增项目" : "编辑项目"}
+      onClose={close}
+      visible={projectModelOpen}
       width={"100%"}
     >
       这是一个新增/编辑项目的弹窗
