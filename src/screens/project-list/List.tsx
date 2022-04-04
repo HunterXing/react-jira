@@ -3,8 +3,8 @@ import { Button, Dropdown, Menu, Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import Star from "components/UI/Star";
-import { useEditProject } from "api/project";
 import useProjectModel from "hooks/useProjectModel";
+import { useEditProject } from "hooks/useProject";
 interface ListProps extends TableProps<any> {
   users: User[];
 }
@@ -19,13 +19,15 @@ export interface User {
 
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
-  const { open, setIsEdit } = useProjectModel();
+  const { open, setProjectEditId } = useProjectModel();
   // 函数柯里化
-  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  // const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
 
-  const handleOpenEditModel = () => {
+  const handleOpenEditModel = (id: string) => {
     open();
-    setIsEdit();
+    setProjectEditId({
+      projectEditId: id,
+    });
   };
   const columns = [
     {
@@ -35,7 +37,7 @@ export const List = ({ users, ...props }: ListProps) => {
           <Star
             isStar={project.pin}
             onCheckedChange={() => {
-              pinProject(project);
+              mutate({ ...project, pin: !project.pin });
             }}
           />
         );
@@ -86,7 +88,7 @@ export const List = ({ users, ...props }: ListProps) => {
                   <Button
                     type="text"
                     style={{ padding: 0 }}
-                    onClick={() => handleOpenEditModel()}
+                    onClick={() => handleOpenEditModel(String(project.id))}
                   >
                     编辑项目
                   </Button>

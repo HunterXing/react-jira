@@ -5,24 +5,28 @@
  */
 
 import useQueryParam from "./useQueryParam";
+import { useProject } from "hooks/useProject";
 
 const useProjectModel = () => {
-  const [{ projectCreate, projectEdit }, setProject] = useQueryParam([
-    "projectCreate",
-    "projectEdit",
+  const [{ projectCreate }, setProject] = useQueryParam(["projectCreate"]);
+
+  const [{ projectEditId }, setProjectEditId] = useQueryParam([
+    "projectEditId",
   ]);
-  // const [{ projectEdit }, setProjectEdit] = useQueryParam(['projectEdit']);
+  const { data: projectDetail, isLoading } = useProject(Number(projectEditId));
+
   const open = () => setProject({ projectCreate: "true" });
   const close = () => setProject({ projectCreate: "false" });
-  const setIsEdit = () =>
-    setProject({ projectEdit: "true", projectCreate: "true" });
 
   return {
-    projectModelOpen: projectCreate === "true",
-    projectModelIsEdit: projectEdit === "true",
+    projectModelOpen: projectCreate === "true" || Boolean(projectEditId),
+    projectModelIsEdit: Boolean(projectEditId),
     open,
     close,
-    setIsEdit,
+    setProjectEditId,
+    projectEditId,
+    projectDetail,
+    isLoading,
   };
 };
 

@@ -1,15 +1,13 @@
 import { SearchPanel } from "./SearchPanel";
-import { List, User } from "./List";
-import React, { useCallback, useState } from "react";
-import { useMount } from "hooks/useMount";
+import { List } from "./List";
+import React, { useState } from "react";
 import { useDebounce } from "hooks/useDebounce";
-import { get } from "api/http";
-import { useAsync } from "hooks/useAsync";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import useQueryParam from "hooks/useQueryParam";
 import styled from "@emotion/styled";
-import { useProject } from "hooks/useProject";
+import { useProjects } from "hooks/useProject";
 import { ErrorBox } from "components/UI/ErrorBox";
+import { useUsers } from "api/user";
 export interface Project {
   id: number;
   personId: number | string;
@@ -26,24 +24,9 @@ export const ProjectListScreen = () => {
 
   const debounceParam = useDebounce(param, 500);
 
-  const {
-    isLoading,
-    error,
-    data: list,
-  } = useProject(debounceParam);
+  const { isLoading, error, data: list } = useProjects(debounceParam);
 
-  const { run: runUsers, data: users } = useAsync<User[]>();
-
-  /**
-   * @description: 自定义hook 相当于 componentDidMount() 仅在页面加载后第一次加载
-   * @param {*}
-   * @return {*}
-   */
-  useMount(
-    useCallback(() => {
-      runUsers(get<User[]>("/users"));
-    }, [runUsers])
-  );
+  const { data: users } = useUsers();
 
   return (
     <div>
@@ -51,12 +34,8 @@ export const ProjectListScreen = () => {
         <h1>项目列表</h1>
       </TopNav>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
-      <ErrorBox error={error}/>
-      <List
-        loading={isLoading}
-        dataSource={list || []}
-        users={users || []}
-      />
+      <ErrorBox error={error} />
+      <List loading={isLoading} dataSource={list || []} users={users || []} />
     </div>
   );
 };
