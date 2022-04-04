@@ -1,17 +1,18 @@
 import { SearchPanel } from "./SearchPanel";
 import { List, User } from "./List";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useMount } from "hooks/useMount";
 import { useDebounce } from "hooks/useDebounce";
 import { get } from "api/http";
-import { Typography } from "antd";
 import { useAsync } from "hooks/useAsync";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import useQueryParam from "hooks/useQueryParam";
 import styled from "@emotion/styled";
+import { useProject } from "hooks/useProject";
+import { ErrorBox } from "components/UI/ErrorBox";
 export interface Project {
   id: number;
-  personId: number;
+  personId: number | string;
   name: string;
   organization: string;
   created: number;
@@ -26,32 +27,12 @@ export const ProjectListScreen = () => {
   const debounceParam = useDebounce(param, 500);
 
   const {
-    run,
     isLoading,
     error,
     data: list,
-    setData: setList,
-  } = useAsync<Project[]>();
+  } = useProject(debounceParam);
 
   const { run: runUsers, data: users } = useAsync<User[]>();
-
-  /**
-   * @description: 输入或者选中的参数改变时，调用函数
-   * @param {*}
-   * @return {*}
-   */
-  useEffect(() => {
-    void getProjects(debounceParam);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounceParam]);
-
-  /**
-   * @description: 得到项目
-   * @param param
-   */
-  const getProjects = async (param: any) => {
-    await run(get<Project[]>("/projects", param));
-  };
 
   /**
    * @description: 自定义hook 相当于 componentDidMount() 仅在页面加载后第一次加载
@@ -70,14 +51,11 @@ export const ProjectListScreen = () => {
         <h1>项目列表</h1>
       </TopNav>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
-      {error ? (
-        <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-      ) : null}
+      <ErrorBox error={error}/>
       <List
         loading={isLoading}
         dataSource={list || []}
         users={users || []}
-        setList={setList}
       />
     </div>
   );

@@ -4,11 +4,9 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import Star from "components/UI/Star";
 import { useEditProject } from "api/project";
-import { Project } from "screens/project-list/index";
 import useProjectModel from "hooks/useProjectModel";
 interface ListProps extends TableProps<any> {
   users: User[];
-  setList: (projects: Project[]) => void;
 }
 
 export interface User {

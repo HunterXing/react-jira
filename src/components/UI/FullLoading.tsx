@@ -1,12 +1,13 @@
 /*
  * @description: 全屏loading
  * @Date: 2021-08-08 22:49:49
- * @LastEditTime: 2021-08-08 23:14:10
+ * @LastEditTime: 2022-04-04 14:24:04
  */
 import styled from "@emotion/styled";
-import { Spin, Typography } from "antd";
+import { Spin } from "antd";
 import { DevTools } from "jira-dev-tool";
 import React from "react";
+import { ErrorBox } from "./ErrorBox";
 
 const FullScreen = styled.div`
   height: 100vh;
@@ -24,6 +25,6 @@ export const FullLoading = () => (
 export const FullPageError = ({ error }: { error: Error | null }) => (
   <FullScreen>
     <DevTools />
-    <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+    <ErrorBox error={error}/>
   </FullScreen>
 );
