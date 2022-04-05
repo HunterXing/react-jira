@@ -56,4 +56,6 @@ const Left = styled.div`
 const Right = styled.div`
   flex: 1;
   padding: 0 2rem;
+  overflow: hidden;
+  height: calc(100vh - 7rem);
 `;

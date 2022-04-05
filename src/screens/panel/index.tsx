@@ -24,8 +24,11 @@ export const Panel = () => {
         <FullLoading />
       ) : (
         <>
-          <h1>{currentProject?.name} 看板</h1>
-          <SearchPanel />
+          <TopSearchWrap>
+            <h1>{currentProject?.name} 看板</h1>
+            <SearchPanel />
+          </TopSearchWrap>
+
           <PanelContainter>
             {panels?.length ? (
               panels?.map((panel) => (
@@ -43,7 +46,12 @@ export const Panel = () => {
 
 const PanelContainter = styled.div`
   display: flex;
-  overflow: hidden;
+  height:  calc(100vh - 19rem);
   margin-top: 2rem;
   margin-right: 2rem;
+  overflow-x: auto;
+`;
+
+const TopSearchWrap = styled.div`
+  height: 9rem;
 `;
