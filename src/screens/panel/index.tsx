@@ -3,7 +3,7 @@
  * @Date: 2022-03-06 21:10:06
  * @Author: xingheng
  */
-import React from "react";
+import React, { Fragment } from "react";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { usePanels } from "api/Panel";
 import { usePanelSearchParams, useProjectInUrl } from "screens/panel/utils";
@@ -19,11 +19,11 @@ export const Panel = () => {
   const { data: currentProject } = useProjectInUrl();
   const { data: panels, isLoading } = usePanels(usePanelSearchParams());
   return (
-    <div>
+    <Fragment>
       {isLoading ? (
         <FullLoading />
       ) : (
-        <>
+        <div style={{display: 'flex', flexDirection: 'column', flex: 1 }}>
           <TopSearchWrap>
             <h1>{currentProject?.name} 看板</h1>
             <SearchPanel />
@@ -38,15 +38,15 @@ export const Panel = () => {
               <NoData description={"该项目暂无任务"} />
             )}
           </PanelContainter>
-        </>
+        </div>
       )}
-    </div>
+    </Fragment>
   );
 };
 
 const PanelContainter = styled.div`
   display: flex;
-  height:  calc(100vh - 19rem);
+  flex: 1;
   margin-top: 2rem;
   margin-right: 2rem;
   overflow-x: auto;

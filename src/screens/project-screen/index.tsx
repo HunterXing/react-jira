@@ -48,14 +48,15 @@ const Left = styled.div`
   background: #fff;
   flex-basis: 20rem;
   border-right: 2px solid #f0f0f0;
-  height: calc(100vh - 7rem);
+  height: calc(100vh - 7.5rem);
   .ant-menu-vertical-left {
     border-right: none !important;
   }
 `;
 const Right = styled.div`
+  display: flex;
   flex: 1;
   padding: 0 2rem;
   overflow: hidden;
-  height: calc(100vh - 7rem);
+  height: calc(100vh - 7.5rem);
 `;

@@ -11,15 +11,17 @@ import bugSvg from "assets/images/bug.svg";
 import styled from "@emotion/styled";
 import { Card } from "antd";
 import { useTaskSearchParams } from "screens/panel/utils";
+import { FullLoading } from "components/FullLoading";
 
 export const PanelColumn = ({ panel }: {panel: Panel}) => {
-  const { data: allTasks } = useTasks(useTaskSearchParams());
+  const { data: allTasks, isLoading } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter(task => task.kanbanId === panel.id);
   return (
     <Container>
-        <h3>{panel.name}</h3>
+      <h3>{panel.name}</h3>
       <TaskContainter>
         {
+          isLoading ? <FullLoading height={"50vh"} size={"small"}/> :
           tasks?.map(task => (
             <Card style={{marginBottom: '0.5rem'}} key={task.id}>
               <div>
