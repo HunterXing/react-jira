@@ -13,6 +13,7 @@ import { FullLoading } from "components/FullLoading";
 import { SearchPanel } from "screens/panel/SearchPanel";
 import { Empty } from "antd";
 import { NoData } from "components/NoData";
+import { CreatePanel } from "screens/panel/CreatePanel";
 
 export const Panel = () => {
   useDocumentTitle("看板列表");
@@ -37,6 +38,7 @@ export const Panel = () => {
             ) : (
               <NoData description={"该项目暂无任务"} />
             )}
+            <CreatePanel />
           </PanelContainter>
         </div>
       )}
@@ -44,12 +46,13 @@ export const Panel = () => {
   );
 };
 
-const PanelContainter = styled.div`
+export const PanelContainter = styled.div`
   display: flex;
   flex: 1;
   margin-top: 2rem;
   margin-right: 2rem;
   overflow-x: auto;
+  width: calc(100vw - 25rem);
 `;
 
 const TopSearchWrap = styled.div`

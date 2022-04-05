@@ -17,7 +17,7 @@ export const PanelColumn = ({ panel }: {panel: Panel}) => {
   const { data: allTasks, isLoading } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter(task => task.kanbanId === panel.id);
   return (
-    <Container>
+    <ColumnContainer>
       <h3>{panel.name}</h3>
       <TaskContainter>
         {
@@ -32,7 +32,7 @@ export const PanelColumn = ({ panel }: {panel: Panel}) => {
           ))
         }
       </TaskContainter>
-    </Container>
+    </ColumnContainer>
   );
 };
 
@@ -48,7 +48,7 @@ const TaskIcon = ({ id } : { id:number }) => {
   );
 }
 
-const Container = styled.div`
+export const ColumnContainer = styled.div`
   min-width: 27rem;
   border-radius: 6px;
   background: rgb(244, 245, 247);
