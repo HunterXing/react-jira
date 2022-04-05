@@ -4,7 +4,7 @@
  * @LastEditTime: 2021-08-01 11:13:07
  */
 
-import { User } from "screens/project-list/List";
+import { User } from "types/User";
 
 export const localStorageKey = "__auth_provider_token__";
 

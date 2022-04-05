@@ -5,11 +5,11 @@
  */
 import { message } from "antd";
 import { AuthForm } from "context/auth-context";
-import { User } from "screens/project-list/List";
 import { handleUserResponse, localStorageKey } from "utils/authProvider";
 import { post } from "./http";
 import { http } from "api/api";
 import to from "utils/toAsync";
+import { User } from "types/User";
 export interface Response {
   msg: string;
   code: number;

@@ -5,7 +5,7 @@
  */
 
 import useQueryParam from "./useQueryParam";
-import { useProject } from "hooks/useProject";
+import { useProject } from "api/project";
 
 const useProjectModel = () => {
   const [{ projectCreate }, setProject] = useQueryParam(["projectCreate"]);

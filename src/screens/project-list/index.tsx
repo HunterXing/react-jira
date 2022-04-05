@@ -5,17 +5,10 @@ import { useDebounce } from "hooks/useDebounce";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import useQueryParam from "hooks/useQueryParam";
 import styled from "@emotion/styled";
-import { useProjects } from "hooks/useProject";
+import { useProjects } from "api/project";
 import { ErrorBox } from "components/UI/ErrorBox";
 import { useUsers } from "api/user";
-export interface Project {
-  id: number;
-  personId: number | string;
-  name: string;
-  organization: string;
-  created: number;
-  pin?: boolean;
-}
+
 export const ProjectListScreen = () => {
   useDocumentTitle("任务管理", false);
   const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);

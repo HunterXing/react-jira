@@ -4,15 +4,11 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import Star from "components/UI/Star";
 import useProjectModel from "hooks/useProjectModel";
-import { useEditProject } from "hooks/useProject";
+import { useEditProject } from "api/project";
+import { User } from "types/User";
+
 interface ListProps extends TableProps<any> {
   users: User[];
-}
-
-export interface User {
-  name: string;
-  id: number;
-  token: string;
 }
 
 // type PropsType = Omit<ListProps, 'users'>

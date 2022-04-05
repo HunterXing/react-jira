@@ -8,12 +8,12 @@ import { ReactNode, useCallback } from "react";
 import { login as fetchLogin } from "api/auth-fetch";
 import * as authApi from "api/auth";
 import React from "react";
-import { User } from "screens/project-list/List";
 import { getToken } from "utils/authProvider";
 import { http } from "api/api";
 import { useMount } from "hooks/useMount";
 import { useAsync } from "hooks/useAsync";
 import { FullLoading, FullPageError } from "components/UI/FullLoading";
+import { User } from "types/User";
 
 export interface AuthForm {
   username: string;

@@ -1,6 +1,6 @@
 import { Input, Select } from "antd";
 import React, { Fragment } from "react";
-import { User } from "./List";
+import { User } from "types/User";
 
 const { Option } = Select;
 

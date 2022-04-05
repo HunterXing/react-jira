@@ -16,10 +16,10 @@ import {
   Select,
   Spin,
 } from "antd";
-import { Project } from "screens/project-list/index";
 import { useUsers } from "api/user";
-import { useAddProject, useEditProject } from "hooks/useProject";
+import { useAddProject, useEditProject } from "api/project";
 import { ErrorBox } from "components/UI/ErrorBox";
+import { Project } from "types/Project";
 
 export interface ModelProps extends DrawerProps {}
 
