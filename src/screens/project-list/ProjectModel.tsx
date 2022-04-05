@@ -18,7 +18,7 @@ import {
 } from "antd";
 import { useUsers } from "api/user";
 import { useAddProject, useEditProject } from "api/project";
-import { ErrorBox } from "components/UI/ErrorBox";
+import { ErrorBox } from "components/ErrorBox";
 import { Project } from "types/Project";
 
 export interface ModelProps extends DrawerProps {}

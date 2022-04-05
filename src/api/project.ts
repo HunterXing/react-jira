@@ -3,7 +3,6 @@
  * @Date: 2022-04-04 12:08:47
  * @Author: xingheng
  */
-import React from "react";
 import { useHttp } from "api/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Project } from "types/Project";

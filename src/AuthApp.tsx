@@ -9,7 +9,7 @@ import { useAuth } from "context/auth-context";
 import React from "react";
 import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Row } from "components/UI/Row";
+import { Row } from "components/Row";
 import { Button, Dropdown, Menu, Popover } from "antd";
 import { ProjectScreen } from "screens/project-screen";
 import { ProjectListScreen } from "screens/project-list";

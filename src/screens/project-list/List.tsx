@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Dropdown, Menu, Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import Star from "components/UI/Star";
+import Star from "components/Star";
 import useProjectModel from "hooks/useProjectModel";
 import { useEditProject } from "api/project";
 import { User } from "types/User";

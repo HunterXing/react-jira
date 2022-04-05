@@ -12,7 +12,7 @@ import { getToken } from "utils/authProvider";
 import { http } from "api/api";
 import { useMount } from "hooks/useMount";
 import { useAsync } from "hooks/useAsync";
-import { FullLoading, FullPageError } from "components/UI/FullLoading";
+import { FullLoading, FullPageError } from "components/FullLoading";
 import { User } from "types/User";
 
 export interface AuthForm {

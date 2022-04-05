@@ -13,8 +13,14 @@ export interface Task {
   // 任务组id
   epicId: number;
   // 看板id
-  panelId: number;
+  kanbanId: number;
   // bug or task
   typeId: number;
   note: string;
+}
+
+
+export interface TaskType {
+  id: number;
+  name: string
 }

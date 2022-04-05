@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { Spin } from "antd";
 import { DevTools } from "jira-dev-tool";
 import React from "react";
-import { ErrorBox } from "./ErrorBox";
+import { ErrorBox } from "components/ErrorBox";
 
 const FullScreen = styled.div`
   height: 100vh;

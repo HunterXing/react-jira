@@ -5,7 +5,7 @@
  */
 
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 
 const useQueryParam = <K extends string>(keys: K[]) => {
   // react-router-dom 中的 useSearchParams
@@ -23,6 +23,17 @@ const useQueryParam = <K extends string>(keys: K[]) => {
     ),
     setSearchParam,
   ] as const;
+};
+
+export const useSetUrlSearchParam = () => {
+  const [searchParams, setSearchParam] = useSearchParams();
+  return (params: { [key in string]: unknown }) => {
+    const o = {
+      ...Object.fromEntries(searchParams),
+      ...params,
+    } as URLSearchParamsInit;
+    return setSearchParam(o);
+  };
 };
 
 export default useQueryParam;

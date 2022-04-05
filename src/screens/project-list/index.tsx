@@ -6,7 +6,7 @@ import useDocumentTitle from "hooks/useDocumentTitle";
 import useQueryParam from "hooks/useQueryParam";
 import styled from "@emotion/styled";
 import { useProjects } from "api/project";
-import { ErrorBox } from "components/UI/ErrorBox";
+import { ErrorBox } from "components/ErrorBox";
 import { useUsers } from "api/user";
 
 export const ProjectListScreen = () => {
