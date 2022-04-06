@@ -4,7 +4,7 @@
  * @Author: xingheng
  */
 import { useHttp } from "api/api";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Task, TaskType } from "types/Task";
 
 export const useTasks = (params? : Partial<Task>) => {
@@ -26,3 +26,18 @@ export const useTaskType = () => {
     })
   );
 };
+
+export const useAddTask = () => {
+  const client = useHttp();
+  const queryClient = useQueryClient();
+  return useMutation(
+    (params: Partial<Task>) =>
+      client(`tasks`, {
+        method: "POST",
+        data: params,
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries("tasks"),
+    }
+  );
+}

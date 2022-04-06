@@ -12,6 +12,7 @@ import styled from "@emotion/styled";
 import { Card } from "antd";
 import { useTaskSearchParams } from "screens/panel/utils";
 import { FullLoading } from "components/FullLoading";
+import { CreateTask } from "screens/panel/CreateTask";
 
 export const PanelColumn = ({ panel }: {panel: Panel}) => {
   const { data: allTasks, isLoading } = useTasks(useTaskSearchParams());
@@ -31,6 +32,7 @@ export const PanelColumn = ({ panel }: {panel: Panel}) => {
             </Card>
           ))
         }
+        <CreateTask kanbanId={panel.id}/>
       </TaskContainter>
     </ColumnContainer>
   );
