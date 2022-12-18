@@ -5,13 +5,12 @@
  */
 import React, { Fragment } from "react";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import { usePanels } from "api/Panel";
+import { usePanels } from "api/panel";
 import { usePanelSearchParams, useProjectInUrl } from "screens/panel/utils";
 import { PanelColumn } from "screens/panel/PanelColumn";
 import styled from "@emotion/styled";
 import { FullLoading } from "components/FullLoading";
 import { SearchPanel } from "screens/panel/SearchPanel";
-import { Empty } from "antd";
 import { NoData } from "components/NoData";
 import { CreatePanel } from "screens/panel/CreatePanel";
 
@@ -24,7 +23,7 @@ export const Panel = () => {
       {isLoading ? (
         <FullLoading />
       ) : (
-        <div style={{display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <TopSearchWrap>
             <h1>{currentProject?.name} 看板</h1>
             <SearchPanel />

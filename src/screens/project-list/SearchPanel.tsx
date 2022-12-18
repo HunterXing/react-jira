@@ -28,7 +28,6 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         }}
       />
       <Select
-        defaultValue={param.personId}
         value={param.personId}
         style={{ width: 120 }}
         onChange={(value) => {

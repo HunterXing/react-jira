@@ -63,7 +63,10 @@ export const http = async (
 
 export const useHttp = () => {
   const { user } = useAuth();
-  return (endpoint: string, { data, token, ...customConfig }: HttpConfig) => {
+  return (
+    endpoint: string,
+    { data, token, ...customConfig }: HttpConfig = {}
+  ) => {
     return http(endpoint, {
       data,
       token: user?.token,

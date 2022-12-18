@@ -7,7 +7,7 @@ import { useHttp } from "api/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Task, TaskType } from "types/Task";
 
-export const useTasks = (params? : Partial<Task>) => {
+export const useTasks = (params?: Partial<Task>) => {
   const client = useHttp();
   return useQuery<Task[]>(["tasks", params], () =>
     client(`tasks`, {
@@ -17,12 +17,11 @@ export const useTasks = (params? : Partial<Task>) => {
   );
 };
 
-
 export const useTaskType = () => {
   const client = useHttp();
   return useQuery<TaskType[]>("taskTypes", () =>
     client("taskTypes", {
-      method: "GET"
+      method: "GET",
     })
   );
 };
@@ -40,4 +39,24 @@ export const useAddTask = () => {
       onSuccess: () => queryClient.invalidateQueries("tasks"),
     }
   );
-}
+};
+
+/**
+ * @description: 根据id获取任务详情
+ * @param {String} taskId
+ * @return {*}
+ */
+export const useTask = (taskId?: string | number) => {
+  const client = useHttp();
+  return useQuery<Task>(["task", taskId], () => client(`tasks/${taskId}`));
+};
+
+export const useEditTask = () => {
+  const client = useHttp();
+  return useMutation((params: Partial<Task>) =>
+    client(`tasks/${params.id}`, {
+      method: "PATCH",
+      data: params,
+    })
+  );
+};

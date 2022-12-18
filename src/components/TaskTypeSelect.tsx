@@ -5,9 +5,11 @@
  */
 import React from "react";
 import { IdSelect } from "components/IdSelect";
-import { useTaskType } from "api/Task";
+import { useTaskType } from "api/task";
 
-export const TaskTypeSelect = (props: React.ComponentProps<typeof IdSelect>) => {
+export const TaskTypeSelect = (
+  props: React.ComponentProps<typeof IdSelect>
+) => {
   const { data: tasks } = useTaskType();
   return <IdSelect options={tasks || []} {...props} />;
 };

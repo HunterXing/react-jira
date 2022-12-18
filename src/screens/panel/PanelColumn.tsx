@@ -5,50 +5,51 @@
  */
 import React from "react";
 import { Panel } from "types/Panel";
-import { useTasks, useTaskType } from "api/Task";
+import { useTasks, useTaskType } from "api/task";
 import taskSvg from "assets/images/task.svg";
 import bugSvg from "assets/images/bug.svg";
 import styled from "@emotion/styled";
 import { Card } from "antd";
-import { useTaskSearchParams } from "screens/panel/utils";
+import { useTaskModal, useTaskSearchParams } from "screens/panel/utils";
 import { FullLoading } from "components/FullLoading";
 import { CreateTask } from "screens/panel/CreateTask";
+import { EditTask } from "screens/panel/EditTaskModel";
 
-export const PanelColumn = ({ panel }: {panel: Panel}) => {
+export const PanelColumn = ({ panel }: { panel: Panel }) => {
   const { data: allTasks, isLoading } = useTasks(useTaskSearchParams());
-  const tasks = allTasks?.filter(task => task.kanbanId === panel.id);
+  const tasks = allTasks?.filter((task) => task.kanbanId === panel.id);
+  const { startEdit } = useTaskModal();
   return (
     <ColumnContainer>
       <h3>{panel.name}</h3>
       <TaskContainter>
-        {
-          isLoading ? <FullLoading height={"50vh"} size={"small"}/> :
-          tasks?.map(task => (
-            <Card style={{marginBottom: '0.5rem'}} key={task.id}>
-              <div>
-                {task.name}
-              </div>
+        {isLoading ? (
+          <FullLoading height={"50vh"} size={"small"} />
+        ) : (
+          tasks?.map((task) => (
+            <Card style={{ marginBottom: "0.5rem" }} key={task.id}>
+              <div onClick={() => startEdit(String(task.id))}>{task.name}</div>
               <TaskIcon id={task.typeId} />
             </Card>
           ))
-        }
-        <CreateTask kanbanId={panel.id}/>
+        )}
+        <CreateTask kanbanId={panel.id} />
+        <EditTask />
       </TaskContainter>
     </ColumnContainer>
   );
 };
 
-
-const TaskIcon = ({ id } : { id:number }) => {
+const TaskIcon = ({ id }: { id: number }) => {
   const { data: taskIcons } = useTaskType();
-  const taskIcon = taskIcons?.find(taskIcon => taskIcon.id === id)?.name;
-  if(!taskIcon) {
+  const taskIcon = taskIcons?.find(
+    (taskIcon) => Number(taskIcon.id) === Number(id)
+  )?.name;
+  if (!taskIcon) {
     return null;
   }
-  return (
-      <img src={taskIcon === 'task' ? taskSvg : bugSvg } alt=""/>
-  );
-}
+  return <img src={taskIcon === "task" ? taskSvg : bugSvg} alt="" />;
+};
 
 export const ColumnContainer = styled.div`
   min-width: 27rem;

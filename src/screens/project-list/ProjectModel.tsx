@@ -44,6 +44,7 @@ export const ProjectModel = () => {
       onClose={close}
       visible={projectModelOpen}
       width={"100%"}
+      forceRender={true}
     >
       {isLoading ? (
         <Spin />
@@ -97,6 +98,7 @@ const ProjectForm = ({
         layout={"vertical"}
         style={{ width: "40rem" }}
         onFinish={onFinish}
+        initialValues={project}
       >
         <Form.Item
           label={"名称"}
@@ -113,7 +115,7 @@ const ProjectForm = ({
           <Input placeholder={"请输入部门名称"} />
         </Form.Item>
         <Form.Item label={"负责人"} name={"personId"}>
-          <Select defaultValue={""}>
+          <Select>
             <Select.Option value={""} key={0}>
               全部
             </Select.Option>

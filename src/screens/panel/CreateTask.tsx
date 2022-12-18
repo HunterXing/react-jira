@@ -4,44 +4,46 @@
  * @Author: xingheng
  */
 import React, { useEffect, useState } from "react";
-import { useAddTask } from "api/Task";
+import { useAddTask } from "api/task";
 import { useProjectIdInUrl } from "screens/panel/utils";
 import { Card, Input } from "antd";
 
-export const CreateTask = ({kanbanId}: {kanbanId: number}) => {
-  const [ name, setName ] = useState("");
-  const { mutateAsync: addTask, isLoading } = useAddTask()
-  const projectId = useProjectIdInUrl()
-  const [ inputModel, setInputModel ] = useState(false)
+export const CreateTask = ({ kanbanId }: { kanbanId: number }) => {
+  const [name, setName] = useState("");
+  const { mutateAsync: addTask } = useAddTask();
+  const projectId = useProjectIdInUrl();
+  const [inputModel, setInputModel] = useState(false);
 
   const submit = async () => {
     await addTask({
       name,
       projectId,
-      kanbanId
-    })
-    setName("")
-    setInputModel(false)
-  }
+      kanbanId,
+    });
+    setName("");
+    setInputModel(false);
+  };
 
-  const toggle = () => setInputModel(!inputModel)
+  const toggle = () => setInputModel(!inputModel);
 
   useEffect(() => {
-    if(!inputModel) {
-     setName("")
+    if (!inputModel) {
+      setName("");
     }
   }, [inputModel]);
-  if(!inputModel) {
+  if (!inputModel) {
     return <div onClick={() => toggle()}>+创建事务</div>;
   }
-  return <Card>
-    <Input
-      onBlur={toggle}
-      placeholder={'需要做什么'}
-      autoFocus={true}
-      onPressEnter={submit}
-      value={name}
-      onChange={e => setName(e.target.value)}
-    />
-  </Card>;
+  return (
+    <Card>
+      <Input
+        onBlur={toggle}
+        placeholder={"需要做什么"}
+        autoFocus={true}
+        onPressEnter={submit}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+    </Card>
+  );
 };

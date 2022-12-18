@@ -5,11 +5,10 @@
  */
 
 import { useHttp } from "api/api";
-import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Panel } from "types/Panel";
-import { Project } from "types/Project";
 
-export const usePanels = (params? : Partial<Panel>) => {
+export const usePanels = (params?: Partial<Panel>) => {
   const client = useHttp();
   return useQuery<Panel[]>(["kanbans", params], () =>
     client("kanbans", {
