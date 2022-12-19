@@ -14,6 +14,7 @@ import { useTaskModal, useTaskSearchParams } from "screens/panel/utils";
 import { FullLoading } from "components/FullLoading";
 import { CreateTask } from "screens/panel/CreateTask";
 import { EditTask } from "screens/panel/EditTaskModel";
+import useQueryParam from "hooks/useQueryParam";
 
 export const PanelColumn = ({ panel }: { panel: Panel }) => {
   const { data: allTasks, isLoading } = useTasks(useTaskSearchParams());
@@ -27,8 +28,13 @@ export const PanelColumn = ({ panel }: { panel: Panel }) => {
           <FullLoading height={"50vh"} size={"small"} />
         ) : (
           tasks?.map((task) => (
-            <Card style={{ marginBottom: "0.5rem" }} key={task.id}>
-              <div onClick={() => startEdit(String(task.id))}>{task.name}</div>
+            <Card
+              style={{ marginBottom: "0.5rem", cursor: "pointer" }}
+              key={task.id}
+            >
+              <div onClick={() => startEdit(String(task.id))}>
+                <HightLightKeyWord taskName={task.name} />
+              </div>
               <TaskIcon id={task.typeId} />
             </Card>
           ))
@@ -37,6 +43,29 @@ export const PanelColumn = ({ panel }: { panel: Panel }) => {
         <EditTask />
       </TaskContainter>
     </ColumnContainer>
+  );
+};
+
+// 搜索关键字高亮
+export const HightLightKeyWord = ({ taskName }: { taskName: string }) => {
+  const [param] = useQueryParam(["name"]);
+  // 根据name分割字符串
+  const nameArr = taskName.split(param.name);
+
+  // 根据name分割字符串，再拼接高亮的 span
+  return (
+    <>
+      {nameArr.map((item, index) => {
+        return (
+          <>
+            {item}
+            {index !== nameArr.length - 1 && (
+              <span style={{ color: "red" }}>{param.name}</span>
+            )}
+          </>
+        );
+      })}
+    </>
   );
 };
 
