@@ -20,6 +20,8 @@ export const PanelColumn = ({ panel }: { panel: Panel }) => {
   const { data: allTasks, isLoading } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter((task) => task.kanbanId === panel.id);
   const { startEdit } = useTaskModal();
+  console.log("isLoading", isLoading);
+
   return (
     <ColumnContainer>
       <h3>{panel.name}</h3>
@@ -31,8 +33,9 @@ export const PanelColumn = ({ panel }: { panel: Panel }) => {
             <Card
               style={{ marginBottom: "0.5rem", cursor: "pointer" }}
               key={task.id}
+              onClick={() => startEdit(String(task.id))}
             >
-              <div onClick={() => startEdit(String(task.id))}>
+              <div>
                 <HightLightKeyWord taskName={task.name} />
               </div>
               <TaskIcon id={task.typeId} />
@@ -57,12 +60,14 @@ export const HightLightKeyWord = ({ taskName }: { taskName: string }) => {
     <>
       {nameArr.map((item, index) => {
         return (
-          <>
+          <span key={index}>
             {item}
             {index !== nameArr.length - 1 && (
-              <span style={{ color: "red" }}>{param.name}</span>
+              <span key={index} style={{ color: "red" }}>
+                {param.name}
+              </span>
             )}
-          </>
+          </span>
         );
       })}
     </>

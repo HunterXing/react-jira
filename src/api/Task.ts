@@ -5,6 +5,7 @@
  */
 import { useHttp } from "api/api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Project } from "types/Project";
 import { Task, TaskType } from "types/Task";
 
 export const useTasks = (params?: Partial<Task>) => {
@@ -31,7 +32,7 @@ export const useAddTask = () => {
   const queryClient = useQueryClient();
   return useMutation(
     (params: Partial<Task>) =>
-      client(`tasks`, {
+      client(`addTasks`, {
         method: "POST",
         data: params,
       }),
@@ -46,17 +47,28 @@ export const useAddTask = () => {
  * @param {String} taskId
  * @return {*}
  */
-export const useTask = (taskId?: string | number) => {
+export const useTask = (id?: number | string) => {
   const client = useHttp();
-  return useQuery<Task>(["task", taskId], () => client(`tasks/${taskId}`));
+  return useQuery<Project>(
+    ["taskDetail", { id }],
+    () => client(`tasks/${id}`),
+    {
+      enabled: Boolean(id),
+    }
+  );
 };
 
 export const useEditTask = () => {
   const client = useHttp();
-  return useMutation((params: Partial<Task>) =>
-    client(`tasks/${params.id}`, {
-      method: "PATCH",
-      data: params,
-    })
+  const queryClient = useQueryClient();
+  return useMutation(
+    (params: Partial<Task>) =>
+      client(`tasks/${params.id}`, {
+        method: "PATCH",
+        data: params,
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries("tasks"),
+    }
   );
 };
