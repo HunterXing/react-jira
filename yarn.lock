@@ -3682,6 +3682,11 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, can
   resolved "https://registry.nlark.com/caniuse-lite/download/caniuse-lite-1.0.30001239.tgz?cache=0&sync_timestamp=1624135650227&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001239.tgz"
   integrity sha1-ZuhmmYW7LLhMyxD2jCXObdPk0rg=
 
+caniuse-lite@^1.0.30001441:
+  version "1.0.30001441"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001441.tgz#987437b266260b640a23cd18fbddb509d7f69f3e"
+  integrity sha512-OyxRR4Vof59I3yGWXws6i908EtGbMzVUi3ganaZQHmydk1iwDhRnvaPG2WaR0KcqrDFKrxVZHULT396LEPhXfg==
+
 capture-exit@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/capture-exit/download/capture-exit-2.0.0.tgz"
@@ -7620,6 +7625,11 @@ jju@^1.1.0:
   version "1.4.0"
   resolved "https://registry.npm.taobao.org/jju/download/jju-1.4.0.tgz#a3abe2718af241a2b2904f84a625970f389ae32a"
   integrity sha1-o6vicYryQaKykE+EpiWXDzia4yo=
+
+jotai@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/jotai/-/jotai-1.12.0.tgz#2e22760289458f636f689ae0aa71cc4a089aa312"
+  integrity sha512-IhyBmjxU1sE2Ni/MUK7gQAb8QvCM6yd1/K5jtQzgQBmmjCjgfXZkkk1rYlQAIRp2KoQk0Y+yzhm1f5cZ7kegnw==
 
 js-sha3@0.8.0:
   version "0.8.0"
